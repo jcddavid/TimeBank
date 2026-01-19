@@ -27,15 +27,15 @@ class BookingLogicTest {
 
     private BookingController bookingController;
 
-    private final String SUBJECT_JDBC = "Test JDBC Integration";
-    private final String SUBJECT_CSV = "Test CSV Integration";
+    private final String subjectJDBC = "Test JDBC Integration";
+    private final String subjectCSV = "Test CSV Integration";
 
     // File path transazioni
-    private final String CSV_TRANS_PATH = "transactions.csv";
+    private final String csvTransPath = "transactions.csv";
 
     // Email fisse per testing
-    private final String EMAIL_STU = "tester_stu@test.com";
-    private final String EMAIL_TUT = "tester_tut@test.com";
+    private final String emailSTU = "tester_stu@test.com";
+    private final String emailTUT = "tester_tut@test.com";
 
     // Variabili per gli ID generati dal DB
     private int studentId;
@@ -63,7 +63,7 @@ class BookingLogicTest {
         updateMySQLBalance(studentId, 0);
 
         assertThrows(InsufficientBalanceException.class, () -> {
-            bookingController.bookLesson(studentId, tutorId, SUBJECT_JDBC);
+            bookingController.bookLesson(studentId, tutorId, subjectJDBC);
         }, "JDBC: Deve bloccare prenotazione con saldo 0");
     }
 
@@ -75,11 +75,11 @@ class BookingLogicTest {
         updateMySQLBalance(studentId, 50);
 
         // 1. Prima prenotazione (OK) -> Scrive su MySQL
-        assertDoesNotThrow(() -> bookingController.bookLesson(studentId, tutorId, SUBJECT_JDBC));
+        assertDoesNotThrow(() -> bookingController.bookLesson(studentId, tutorId, subjectJDBC));
 
         // 2. Seconda prenotazione (Errore) -> Legge da MySQL
         assertThrows(DuplicateBookingException.class, () -> {
-            bookingController.bookLesson(studentId, tutorId, SUBJECT_JDBC);
+            bookingController.bookLesson(studentId, tutorId, subjectJDBC);
         }, "JDBC: Deve bloccare duplicati usando il DB");
     }
 
@@ -90,7 +90,7 @@ class BookingLogicTest {
         updateMySQLBalance(studentId, 0);
 
         assertThrows(InsufficientBalanceException.class, () -> {
-            bookingController.bookLesson(studentId, tutorId, SUBJECT_CSV);
+            bookingController.bookLesson(studentId, tutorId, subjectCSV);
         }, "CSV: Deve bloccare se l'utente DB ha saldo 0");
     }
 
@@ -101,14 +101,14 @@ class BookingLogicTest {
         updateMySQLBalance(studentId, 50);
 
         assertDoesNotThrow(() -> {
-            bookingController.bookLesson(studentId, tutorId, SUBJECT_CSV);
+            bookingController.bookLesson(studentId, tutorId, subjectCSV);
         }, "CSV: Scrittura su file fallita");
 
-        File f = new File(CSV_TRANS_PATH);
+        File f = new File(csvTransPath);
         assertTrue(f.exists(), "Il file transactions.csv deve esistere");
 
         assertThrows(DuplicateBookingException.class, () -> {
-            bookingController.bookLesson(studentId, tutorId, SUBJECT_CSV);
+            bookingController.bookLesson(studentId, tutorId, subjectCSV);
         }, "CSV: Deve bloccare duplicati rileggendo il file");
     }
 
@@ -118,8 +118,8 @@ class BookingLogicTest {
         bookingController = new BookingController();
 
         deleteSpecificTestUsers(); // Pulisci vecchi
-        this.studentId = createTemporaryUserInDB("TestStu", EMAIL_STU);
-        this.tutorId = createTemporaryUserInDB("TestTut", EMAIL_TUT);
+        this.studentId = createTemporaryUserInDB("TestStu", emailSTU);
+        this.tutorId = createTemporaryUserInDB("TestTut", emailTUT);
 
         if (useCsvForTransactions) {
             cleanupCSVFile();
@@ -145,15 +145,15 @@ class BookingLogicTest {
 
         String sqlTrans = "DELETE FROM transactions WHERE student_id IN (SELECT user_id FROM Users WHERE email IN (?, ?))";
         try (PreparedStatement stmt = conn.prepareStatement(sqlTrans)) {
-            stmt.setString(1, EMAIL_STU);
-            stmt.setString(2, EMAIL_TUT);
+            stmt.setString(1, emailSTU);
+            stmt.setString(2, emailTUT);
             stmt.executeUpdate();
         }
 
         String sqlUsers = "DELETE FROM Users WHERE email IN (?, ?)";
         try (PreparedStatement stmt = conn.prepareStatement(sqlUsers)) {
-            stmt.setString(1, EMAIL_STU);
-            stmt.setString(2, EMAIL_TUT);
+            stmt.setString(1, emailSTU);
+            stmt.setString(2, emailTUT);
             stmt.executeUpdate();
         }
     }
@@ -179,12 +179,12 @@ class BookingLogicTest {
     }
 
     private void cleanupCSVFile() {
-        File file = new File(CSV_TRANS_PATH);
+        File file = new File(csvTransPath);
         if (!file.exists()) return;
         try {
             List<String> lines = Files.readAllLines(file.toPath());
             List<String> cleanLines = lines.stream()
-                    .filter(line -> !line.contains(SUBJECT_CSV))
+                    .filter(line -> !line.contains(subjectCSV))
                     .collect(Collectors.toList());
             Files.write(file.toPath(), cleanLines, StandardOpenOption.TRUNCATE_EXISTING);
         } catch (IOException e) {
