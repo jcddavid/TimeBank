@@ -24,7 +24,6 @@ public class RegisterController {
             throw new IllegalArgumentException("Lo username non può essere vuoto.");
         }
 
-        // USA LA FACTORY
         UserDAO dao = DAOFactory.getUserDAO();
 
         if (dao.checkUserExists(bean.getUsername(), bean.getEmail())) {
@@ -35,6 +34,7 @@ public class RegisterController {
         user.setUsername(bean.getUsername());
         user.setEmail(bean.getEmail());
         user.setPassword(bean.getPassword());
+        user.setBalance(10);
 
         dao.registerUser(user);
     }
