@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.text.Font?>
+
+<VBox alignment="CENTER" spacing="15.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.progetto.timebank.viewgui.RegisterGraphicController">
+    <padding>
+        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
+    </padding>
+
+    <Label text="Nuovo Utente">
+        <font><Font name="System Bold" size="20.0" /></font>
+    </Label>
+
+    <TextField fx:id="txtUsername" promptText="Username" maxWidth="300"/>
+    <TextField fx:id="txtEmail" promptText="Email" maxWidth="300"/>
+    <PasswordField fx:id="txtPassword" promptText="Password" maxWidth="300"/>
+
+    <HBox spacing="10" alignment="CENTER">
+        <Button text="Annulla" onAction="#onBackClick"/>
+        <Button text="Conferma Registrazione" onAction="#onConfirmRegisterClick" defaultButton="true"/>
+    </HBox>
+</VBox>

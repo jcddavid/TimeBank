@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox alignment="CENTER" spacing="20.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+    <Label text="Benvenuto in TimeBank">
+        <font><Font name="System Bold" size="30.0" /></font>
+    </Label>
+    <Label text="Seleziona una voce dal menu a sinistra." textFill="#7f8c8d"/>
+</VBox>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<VBox alignment="TOP_LEFT" spacing="15.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.progetto.timebank.viewgui.ProfileGraphicController">
+    <padding>
+        <Insets bottom="30.0" left="30.0" right="30.0" top="30.0" />
+    </padding>
+
+    <Label text="Il Mio Profilo">
+        <font><Font name="System Bold" size="24.0" /></font>
+    </Label>
+    <Separator prefWidth="200.0" />
+
+    <Label text="Username:" textFill="#7f8c8d" />
+    <Label fx:id="lblUsername" text="MarioRossi">
+        <font><Font size="18.0" /></font>
+    </Label>
+
+    <Label text="Email:" textFill="#7f8c8d">
+        <VBox.margin><Insets top="10.0" /></VBox.margin>
+    </Label>
+    <Label fx:id="lblEmail" text="mario@email.com">
+        <font><Font size="18.0" /></font>
+    </Label>
+
+    <Label text="Reputazione Tutor:" textFill="#7f8c8d">
+        <VBox.margin><Insets top="10.0" /></VBox.margin>
+    </Label>
+    <HBox alignment="CENTER_LEFT" spacing="10.0">
+        <children>
+            <HBox fx:id="boxRating" spacing="2.0" />
+            <Label fx:id="lblRatingNum" text="(0.0 / 5)" textFill="#7f8c8d" />
+        </children>
+    </HBox>
+
+    <Label text="Competenze:" textFill="#7f8c8d">
+        <VBox.margin><Insets top="10.0" /></VBox.margin>
+    </Label>
+
+    <FlowPane fx:id="paneSkills" hgap="10.0" vgap="10.0" prefWrapLength="600.0">
+    </FlowPane>
+
+    <Label text="Saldo Ore Disponibile:" textFill="#7f8c8d">
+        <VBox.margin><Insets top="20.0" /></VBox.margin>
+    </Label>
+    <Label fx:id="lblBalance" text="10 h" textFill="#f39c12">
+        <font><Font name="System Bold" size="24.0" /></font>
+    </Label>
+
+</VBox>

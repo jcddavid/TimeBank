@@ -1,0 +1,12 @@
+# Cartelle di compilazione
+target/
+out/
+build/
+.idea/
+*.iml
+*.iws
+*.ipr
+*.class
+*.log
+.DS_Store
+Thumbs.db
