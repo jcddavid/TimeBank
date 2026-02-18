@@ -185,7 +185,7 @@ class BookingLogicTest {
             List<String> lines = Files.readAllLines(file.toPath());
             List<String> cleanLines = lines.stream()
                     .filter(line -> !line.contains(subjectCSV))
-                    .collect(Collectors.toList());
+                    .toList();
             Files.write(file.toPath(), cleanLines, StandardOpenOption.TRUNCATE_EXISTING);
         } catch (IOException e) {
             e.printStackTrace();
